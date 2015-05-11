@@ -1,0 +1,81 @@
+\documentclass[ngerman,openany]{scrreprt}
+\usepackage[latin1]{inputenc}
+
+% ------------------------------ PAKETE ------------------------------  
+\usepackage{units}
+\usepackage{tabularx} % Paket für Tabellen
+\usepackage{verbatim}
+\usepackage{geometry} % Paket für Seitenränder u.ä.
+\usepackage{graphicx} % Paket für Grafiken
+\usepackage{titlesec}
+\usepackage{color}
+\usepackage{fancyhdr} % Paket für Kopfzeile
+
+
+% ------------------------------ KOPFZEILE ------------------------------  
+
+\pagestyle{fancy} %eigener Seitenstil
+\fancyhf{} %alle Kopf- und Fußzeilenfelder bereinigen
+\fancyhead[L]{\nouppercase{\leftmark}} %Kopfzeile links
+\fancyhead[C]{} %zentrierte Kopfzeile
+\fancyhead[R]{\thepage} %Kopfzeile rechts
+\renewcommand{\headrulewidth}{0.4pt} %obere Trennlinie
+
+% ------------------------------ DECKBLATT ------------------------------  
+\begin{document}
+
+
+\begin{titlepage}
+\begin{center}
+\Large{\textbf{Pflichtenheft zum Projekt}} \\[8ex]
+\LARGE{\textbf{Aufbau einer Cloud-Infrastruktur in einem Forschungszentrum}}\\[3ex]
+\large{\quad} \\
+\includegraphics[scale=1.5]{HTW_Logo_rgb.jpg} \qquad \qquad \includegraphics[scale=1.0]{logo_desy.jpg} \\[10ex]
+\begin{tabular}{l l l} \\
+bearbeitet von: & \quad Tom Schubert \\[2ex]
+Studiengang: & \quad Angewandte Informatik (Master) \\[2ex]
+Fachbereich: & \quad Wirtschaftswisenschaften II \\[2ex]
+Matrikelnummer: & \quad 535279 \\[2ex]
+zuständiger Prof.: & \quad Prof. Dr. Hermann Heßling \\[2ex]
+zuständige Mitarbeiter (DESY): & \quad Patrick Furhmann \\[2ex]
+& \quad Yves Kemp \\[2ex]
+Datum (Version): & \quad 07.05.2015 (Ver. 1.0)
+\end{tabular}
+\end{center}
+\end{titlepage}
+
+
+% ------------------------------ INHALTSVERZEICHNIS ------------------------------  
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+\pagestyle{fancy} % Für alle folgenden Seiten diesen Stil definieren
+% ------------------------------ LANGTEXT ------------------------------  
+\chapter{Projektziel}
+
+
+\chapter{Anforderungen}
+
+\section{Muss-Anforderungen}
+
+\section{Optionale Anforderungen}
+
+\section{Abgrenzung}
+
+\chapter{Arbeitspakete}
+
+\section{Vorbereitung}
+
+\section{Machbarkeitsprüfung}
+
+\subsection{Container \& Infiniband}
+
+\chapter{Projektplan}
+
+\chapter{Zeitplanung}
+
+\end{document}
+
+
