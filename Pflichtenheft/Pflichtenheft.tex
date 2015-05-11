@@ -1,0 +1,207 @@
+\documentclass[ngerman,openany]{scrreprt}
+%\documentclass[a4paper]{article}
+\usepackage[latin1]{inputenc}
+
+% Pakete
+\usepackage{pgfgantt}
+\usepackage{units}
+\usepackage{tabularx}
+\usepackage{verbatim}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{titlesec} 
+\usepackage{color}
+
+\newcommand{\chapterbreak}{\clearpage}
+
+\listfiles
+
+
+%Kopfzeile
+\usepackage{fancyhdr} %Paket laden
+\pagestyle{fancy} %eigener Seitenstil
+\fancyhf{} %alle Kopf- und Fußzeilenfelder bereinigen
+\fancyhead[L]{\nouppercase{\leftmark}} %Kopfzeile links
+\fancyhead[C]{} %zentrierte Kopfzeile
+\fancyhead[R]{\thepage} %Kopfzeile rechts
+\renewcommand{\headrulewidth}{0.4pt} %obere Trennlinie
+
+% Titel
+%\title{Pflichtenheft}
+%\subtitle{Aufbau einer Cloud-Infrastruktur in einem Forschungszentrum}
+%\author{Tom Schubert (Mat-Nr. 535279 HTW-Berlin)}
+%\date{06.05.2015}
+
+\begin{document}
+
+% Deckblatt
+\begin{titlepage}
+
+\begin{center}
+
+\Large{\textbf{Pflichtenheft zum Projekt}} \\[8ex]
+\LARGE{\textbf{Aufbau einer Cloud-Infrastruktur in einem Forschungszentrum}}\\[3ex]
+%\large{DESY}\\[3ex]
+\large{\quad} \\
+\includegraphics[scale=1.5]{HTW_Logo_rgb.jpg} \qquad \qquad \includegraphics[scale=1.0]{logo_desy.jpg} \\[10ex]
+
+\begin{tabular}{l l l} \\
+bearbeitet von: & \quad Tom Schubert \\[2ex]
+Studiengang: & \quad Angewandte Informatik (Master) \\[2ex]
+Fachbereich: & \quad Wirtschaftswisenschaften II \\[2ex]
+Matrikelnummer: & \quad 535279 \\[2ex]
+zuständiger Prof.: & \quad Prof. Dr. Hermann Heßling \\[2ex]
+zuständige Mitarbeiter (DESY): & \quad Patrick Furhmann \\[2ex]
+& \quad Yves Kemp \\[2ex]
+Datum (Version): & \quad 07.05.2015 (Ver. 1.0)
+\end{tabular}
+\end{center}
+
+\end{titlepage}
+
+%Inhaltsverzeichnis
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+\chapter{Projektziel}
+\pagestyle{fancy}
+Ziel des Projektes ist es zu \textbf{untersuchen}, in wie fern es möglich ist auf einem HPC-Cluster die Container-Technologie zum Einsatz zu bringen. \\
+Forschungsgruppen am DESY (Deutsches Elektronen-Synchrotron) verwendet verschiedene Tools und Applikationen für die Verarbeitung ihrer Daten, welche zumeist die Größe der zu verarbeitenden Daten herkömmlicher Rechner überschreiten. Hierbei sind für die einzelnen Anwendungen verschiedene Voraussetzungen gegeben, wie z. B. bestimmte Betriebsysteme oder Bibliotheken in festgelegten Versionen. \\
+Da die Forschungsgruppen und damit auch die Anwendungen und Anforderungen stetig wechseln ist es nicht möglich den Anwendern eine einzige Umgebung zur Verfügung zu stellen. \\
+Es ist gefordert eine Lösung zu finden, die sowohl auf der einen Seite dem Anwender die Möglichkeit bietet - so leicht wie möglich - seine Anwendung zu starten, auf der anderen Seite dennoch die Performance des HPC-Clusters nicht zu stark beeinträchtigt. \\
+Darüber hinaus ist davon auszugehen, dass Anwender des HPC-Clusters, die dieses für Forschungszwecke nutzen, im Bereich der Informatik \textbf{nicht} versiert sind. \\
+Es ist dem entsprechend gefordert, dass die zu erstellende Lösung so Simpel wie möglich zu handhaben ist.
+% evt. darauf hinweisen, dass VM-Lösungen nicht zum Einsatz kommen können, da das Overhead dieser zu groß ist und zu extremem Performanceproblemen führen würde.
+% Dies ist vorgegeben und nicht zu verhandeln.
+
+
+\chapter{Anforderungen}
+Folgend werden die Anforderungen des Projektes erläutert und diese in verschiedene Prioritätsstufen untergliedert. Dabei sind Muss-Anforderungen jene, die das Projektziel im ganzen Beeinflussen und zwingend für den erfolgreichen Abschluss des Projektes fertiggestellt werden müssen.
+
+\section{Muss-Anforderungen}
+Untersuchung der ...
+\begin{itemize}
+\item Anwendungsmöglichkeit von Containern im HPC-Umfeld
+\item Möglichkeit von Verwendung des Infinibandes mit Containern, welches im HPC-Clusters bei der Kommunikation zum Einsatz kommt
+\item Performanceeinbußungen bei Verwendung von Container-Lösungen (Benchmarking)
+\item Möglichkeit zur Verteilung dieser Container mit
+\item Sicherheitsaspekte von Containern (Sandboxing)
+\item benötigten Berechtigungen zum starten eines Containers
+\end{itemize}
+
+\section{Optionale Anforderungen}
+Prüfen ob ...
+\begin{itemize}
+\item die Möglichkeit besteht von extern in Container einzugreifen, um dem Anwender zusätzlichen Support bieten zu können
+\item es möglich ist, ein generisches System zu schaffen welches automatisch aufgrund gestellter Anforderungen den passenden Container zusammenstellt.
+\end{itemize}
+
+\section{Abgrenzung}
+Der Einsatz von virtuellen Maschinen (VMs) ist nicht Ziel des Projektes und ist auch nicht zu untersuchen. Virtuelle Maschinen erzeugen ein zu großes Overhead um in großen Verteilten Systemen - wie dem HPC-Clusters - zum Einsatz zu kommen. \\
+%TODO: evtl. in Projektziel mit unterbringen, evtl. auch nicht, da dieses kurz und knackig sein soll!!!
+
+\chapter{Arbeitspakete}
+Für eine einfachere Übersicht werden im folgenden Abschnitt einzelnen Projektschritte in Pakete zusammengefasst. Innerhalb der Pakete werden die einzelnen Schritte detailliert beschrieben um das Ziel dieses Schrittes festzulegen. Diese Zusammenfassung bedeutet nicht, dass die einzelnen Arbeitsschritte stets in der hier angegebenen Reihenfolge stattfinden. \\
+Ein erster Ablaufplan befindet sich im Kapitel Projektplan.
+
+\section{Vorbereitung}
+In diesem Abschnitt werden nötigen Vorbereitungen für das Projekt getroffen. Dazu gehören folgende Unterpunkte: 
+\begin{itemize}
+\item Hardware- \& Softwarevoraussetzungen schaffen (Berechtigungen beantragen, Fernzugriffe einrichten, ...)
+\item Literaturrecherche über verschiedene Container-Lösungen
+\item Literaturrecherche über HPC-Cluster
+% jülisch (Super-computer zentrum, evtl. kontakt herstellen (Patrick Furhmann) - sind dort Aufgaben bereits abgeschlossen?)
+\end{itemize}
+
+\section{Machbarkeitsprüfung}
+Im Arbeitspaket Machbarkeitsprüfung soll geprüft werden, ob verschiedene Anforderungen zu realisieren sind. Wichtig ist, dass lediglich die Prüfung und nicht die Umsetzung gefordert ist. \\
+Als Ziel einzelner Schritte dieses Abschnittes können Dokumentationen zur Anweisung über die Realisierung erstellt werden (Anweisungsbeschreibung).
+
+\subsection{Container \& Infiniband}
+Das Infiniband ist die Hauptkommunikation zwischen den Rechnerknoten des HPC-Clusters und stellt somit einen wichtigen Aspekt bei der Untersuchung von Container-Technologien dar. \\
+In diesem Arbeitsabschnitt soll geprüft werden, ob die Möglichkeit besteht Container in einem Umfeld von Infiniband-Kommunikation einzusetzen. \\
+Dieser Projektabschnitt ist Grundvoraussetzung für das ganze Projekt und wird aus diesem Grund an erster Stelle durchgeführt (Bereits in der Vorbereitungsphase des Projektes). Ohne diese Möglichkeit sind keine weiteren Untersuchungen im Bereich von Containern notwendig. Es ist anschließend gefordert weitere Alternativen zu finden, die mit der Problemstellung umgehen können.
+
+\subsection{Erstellen eines Images}
+Es soll eine Anweisung für den Anwender geschrieben werden welche erklärt, wie der Anwender vorgehen muss um ein entsprechendes Image - mit seiner benötigten Software - zu erstellen (Userdokumentation). 
+
+\subsection{Shared File System}
+Um die Daten, welche ausgewertet werden sollen, zu erreichen existieren verschiedene File-Systems. Es soll untersucht werden wie diese Daten in den Container geladen werden können und welche Performance sich dabei ergibt. \\
+Als Idee sind folgende zwei Varianten möglich:
+\begin{itemize}
+\item Der Container unterstützt alle nötigen File-Systeme und kann auf die Daten direkt zugreifen (Nachteil: Alle Module zum Lesen und Verarbeiten verschiedener File-Systeme müssen im Container vorhanden sein)
+\item das Host-System greift auf die Daten zu und leitet diese an den Container weiter
+\end{itemize}
+
+\section{Sicherheit}
+Sicherheitsaspekte rund um den Bereich von Containern sind zu Untersuchen. 
+
+\subsection{Root Access}
+Es ist gefordert, dass der Anwender auf dem Host-System keine Root-Berechtigungen besitzt und auch für das Starten des Container-Images keine weitere Berechtigungen notwendig sind. Daraus folgt, dass der Anwender ohne administrative Hilfe in der Lage sein soll, sein Container-Image zu laden und damit zu arbeiten. \\
+In diesem Arbeitsabschnitt soll geprüft werden, welche Möglichkeiten es gibt Berechtigungen zu setzen und welche Berechtigungen notwendig sind um verschiedene Kommandos (z. B. das Laden eines Images) durchzuführen.
+
+\subsection{Sandboxing}
+Es soll untersucht werden in wie weit Container den Anwender vom Host-System abgrenzen (Hardware, Daten, andere Prozesse) und welche Ressourcen weiterhin zur Verfügung stehen. \\
+Dem Nutzer darf keine Möglichkeit gegeben werden die Barrieren des Gast-Systems zu überschreiten und in das Host-System einzudringen oder dort Prozesse und Anwendungen zu starten. Das Host-System darf in keinem Fall von einem Anwender modifiziert werden. 
+
+\subsection{Einschränkung der Kommunikation von verschiedenen Netzen}
+Es soll untersucht werden, ob es möglich ist einen geladenen Container von festgelegten Netzen abzutrennen. Zugelassene bzw. verbotene Netze werden über White- / Blacklists definiert. Verschiedene Netze sollen von Containern nicht erreichbar sein und sind aus diesem Grund nicht zugelassen.
+
+\section{Geschwindigkeit (Performance)}
+Der Einsatz von Containern ist als Vorschlag gegeben, da virtuelle Maschinen zu starke Performanceeinbußen auf großen Rechnernetzen haben. \\
+Es soll untersucht werden, ob und wie stark die Einbußungen bei der Verwendung von Container-Lösungen sind.
+
+\subsection{Benchmarking}
+In diesem Fall werden kleine Programme geschrieben, oder bereits existierende verwendet, welche die Performance des Systems prüfen sollen. Hierbei werden hauptsächlich Aspekte wie Latenz, Bandbreite und CPU-Auslastung untersucht.
+
+\subsection{Overhead}
+Es soll untersucht werden, inwiefern die Verwendung von Containern die Performance des Gesamtsystems, bzw. einzelner Knoten, senkt. Der Overhead kann aus den Resultaten des Benchmarking erkannt und analysiert werden.
+
+\section{Zukunftsaussichten}
+In diesem Arbeitspaket sind alle Aufgaben aufgeführt, welche nicht zwingend für den Projekterfolg zu bearbeiten sind. Hier sind unter anderem Ideen aufgelistet, wie das System in ferner Zukunft laufen kann.
+
+\subsection{User Support}
+Der Arbeitsschritt User Support befasst sich mit der Frage, ob ein externer Zugriff auf den Container existiert, um so dem Benutzer Support zu gewährleisten. \\
+Mit dieser Variante ist die Möglichkeit gegeben dem Anwender bei Fragen zur Seite zu stehen und sich extern auf das System zu schalten. \\
+Diesem Arbeitsschritt sind keine detaillierten Aufgaben untergliedert, da zum Zeitpunkt der Erstellung dieses Pflichtenheftes nicht abzusehen ist, inwiefern dieser Schritt Machbar ist und welche Variationen mit der Container-Technologie zur Verfügung stehen. 
+
+\subsection{generic System}
+Unter einem generischen System ist in diesem Kontext ein System zu verstehen, welches sich automatisch den Bedürfnissen des Anwenders anpasst. \\
+So kann z. B. der Anwender vorgeben, welche Software er verwenden möchte und das System erstellt dazu automatisch ein Image, mit benötigtem Betriebssystemen, notwendigen Bibliotheken und der zu nutzenden Software (in geforderter Version), welches dem Anwender zur Verfügung gestellt wird bzw. automatisch geladen werden kann.
+
+\subsection{Orchestrierung}
+Es soll untersucht werden, wie das Image im Gesamtsystem geladen werden kann. Darüber hinaus sind Aspekte der Hardwareverteilung (z. B. Anfordern von mehreren Cores) zu Berücksichtigen. \\
+Als ein Vorschlag ist die Verwendung von OpenStack als Orchestrierungstool gegeben, welcher zu untersuchen ist. 
+
+\chapter{Projektplan}
+Der hier dargestellte Projektplan zeigt die Reihenfolge der Aufgaben und deren Zuordnung in das Arbeitspaket. Nach Abschluss eines Arbeitspaketes ist der dazu gehörige Meilenstein als Teilabschluss vorgesehen. \\
+\begin{enumerate}
+\item Container \& Infiniband (Machbarkeit)
+\item Erstellen eines Images (Machbarkeit)
+\item Shared File System (Machbarkeit)
+\item \textbf{Meilenstein Machbarkeitsprüfung} \hrule
+\item Benchmarking (Performance)
+\item Overload (Performance)
+\item \textbf{Meilenstein Benchmarking} \hrule
+\item Root Access (Sicherheit)
+\item Sandboxing (Sicherheit)
+\item Einschränkung der Kommunikation von verschiedenen Netzen (Sicherheit)
+\item \textbf{Meilenstein Sicherheit} \hrule
+\item Projektabschluss \& Zusammenfassung 
+\item \textbf{Meilenstein Projektabschluss} \hrule \hrule \hrule
+\item User Support (Aussichten)
+\item Orchestrierung (Aussichten)
+\item generic System (Aussichten)
+\end{enumerate}
+
+\chapter{Zeitplanung}
+Da das Projekt zusätzlich an der Hochschule für Technik und Wirtschaft in Berlin (HTW-Berlin) in einigen Kursen als Abgabe vorgesehen ist, sind die Zeitvorgaben der Hochschule einzuhalten. \\
+Der Erste Projektabschnitt Machbarkeit wird im Rahmen des Kurses \textit{Forschungsprojekt 1} absolviert. \\Aufgaben, welche laut Projektplan nach dem Meilenstein Machbarkeitsprüfung geplant sind, werden im Kurs \textit{Forschungsprojekt 2} oder der danach anstehenden Masterarbeit behandelt. \\
+Darüber hinaus werden grundlegende Begrifflichkeiten und Zusammenhänge in einem seperaten Dokument für den Kurs \textit{Independent Coursework} beschrieben. Innerhalb dieser Ausarbeitung werden auch verschiedene Lösungen aufgezeigt und deren Vor- und Nachteile beschrieben. \\ \\
+\textbf{Wichtig: }Dieser Zeitentwurf ist lediglich eine Richtlinie und ist nicht zwingend einzuhalten. Durch stetige Kommunikation mit dem DESY und Prof. Dr. Hermann Heßling (Zuständiger Professor der Hochschule) können Projektaufgaben verschoben, entfernt oder neue Aufgaben hinzugefügt werden. 
+
+\end{document}
+
+
